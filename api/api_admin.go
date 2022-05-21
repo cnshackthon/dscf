@@ -31,12 +31,12 @@ type AdminApiService service
 type ApiCreateTestUserRequest struct {
 	ctx _context.Context
 	ApiService *AdminApiService
-	subscriberDetails *SubscriberDetails
+	subscriberDetails *clientmodel.SubscriberDetails
 	xTestmode *string
 }
 
 // Add a new test user
-func (r ApiCreateTestUserRequest) SubscriberDetails(subscriberDetails SubscriberDetails) ApiCreateTestUserRequest {
+func (r ApiCreateTestUserRequest) SubscriberDetails(subscriberDetails clientmodel.SubscriberDetails) ApiCreateTestUserRequest {
 	r.subscriberDetails = &subscriberDetails
 	return r
 }
@@ -46,7 +46,7 @@ func (r ApiCreateTestUserRequest) XTestmode(xTestmode string) ApiCreateTestUserR
 	return r
 }
 
-func (r ApiCreateTestUserRequest) Execute() (SubscriberDetails, *_nethttp.Response, error) {
+func (r ApiCreateTestUserRequest) Execute() (clientmodel.SubscriberDetails, *_nethttp.Response, error) {
 	return r.ApiService.CreateTestUserExecute(r)
 }
 
@@ -65,12 +65,12 @@ func (a *AdminApiService) CreateTestUser(ctx _context.Context) ApiCreateTestUser
 
 // Execute executes the request
 //  @return SubscriberDetails
-func (a *AdminApiService) CreateTestUserExecute(r ApiCreateTestUserRequest) (SubscriberDetails, *_nethttp.Response, error) {
+func (a *AdminApiService) CreateTestUserExecute(r ApiCreateTestUserRequest) (clientmodel.SubscriberDetails, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  SubscriberDetails
+		localVarReturnValue  clientmodel.SubscriberDetails
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminApiService.CreateTestUser")
@@ -145,7 +145,7 @@ func (a *AdminApiService) CreateTestUserExecute(r ApiCreateTestUserRequest) (Sub
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v ApiError
+			var v clientmodel.ApiError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -170,12 +170,12 @@ func (a *AdminApiService) CreateTestUserExecute(r ApiCreateTestUserRequest) (Sub
 type ApiDeleteTestuserRequest struct {
 	ctx _context.Context
 	ApiService *AdminApiService
-	subscriberId *SubscriberId
+	subscriberId *clientmodel.SubscriberId
 	xTestmode *string
 }
 
 // External ID of the subscriber
-func (r ApiDeleteTestuserRequest) SubscriberId(subscriberId SubscriberId) ApiDeleteTestuserRequest {
+func (r ApiDeleteTestuserRequest) SubscriberId(subscriberId clientmodel.SubscriberId) ApiDeleteTestuserRequest {
 	r.subscriberId = &subscriberId
 	return r
 }
@@ -282,7 +282,7 @@ func (a *AdminApiService) DeleteTestuserExecute(r ApiDeleteTestuserRequest) (*_n
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v ApiError
+			var v clientmodel.ApiError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -301,7 +301,7 @@ type ApiGetApiStatusRequest struct {
 }
 
 
-func (r ApiGetApiStatusRequest) Execute() (HelloResponses, *_nethttp.Response, error) {
+func (r ApiGetApiStatusRequest) Execute() (clientmodel.HelloResponses, *_nethttp.Response, error) {
 	return r.ApiService.GetApiStatusExecute(r)
 }
 
@@ -322,12 +322,12 @@ func (a *AdminApiService) GetApiStatus(ctx _context.Context) ApiGetApiStatusRequ
 
 // Execute executes the request
 //  @return HelloResponses
-func (a *AdminApiService) GetApiStatusExecute(r ApiGetApiStatusRequest) (HelloResponses, *_nethttp.Response, error) {
+func (a *AdminApiService) GetApiStatusExecute(r ApiGetApiStatusRequest) (clientmodel.HelloResponses, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  HelloResponses
+		localVarReturnValue  clientmodel.HelloResponses
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminApiService.GetApiStatus")
@@ -394,7 +394,7 @@ func (a *AdminApiService) GetApiStatusExecute(r ApiGetApiStatusRequest) (HelloRe
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v ApiError
+			var v clientmodel.ApiError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

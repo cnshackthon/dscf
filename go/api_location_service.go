@@ -11,9 +11,10 @@ package datarepository
 
 import (
 	"context"
-	"net/http"
-	"errors"
-	openapiclient "github.com/cnshackthon/dscf/go"
+	//"net/http"
+	//"errors"
+	clientmodel  "github.com/cnshackthon/dscf/model"
+	clientapi "github.com/cnshackthon/dscf/api"
 	"fmt"
 	"os"
 )
@@ -41,11 +42,11 @@ func (s *LocationApiService) GetSubIdLocation(ctx context.Context, subId string)
 	//return Response(0, nil),nil
 	// get location from api gee sim
 
-	subscriberId := *openapiclient.NewSubscriberId("test.user@domain.tld") // SubscriberId | External ID of the subscriber
+	subscriberId := *clientmodel.NewSubscriberId(subId) // SubscriberId | External ID of the subscriber
     xTestmode := "xTestmode_example" // string | Enables test mode when set to \"true\".  Assumes \"false\" if not present. (optional)
 
-    configuration := openapiclient.NewConfiguration()
-    api_client := openapiclient.NewAPIClient(configuration)
+    configuration := clientapi.NewConfiguration()
+    api_client := clientapi.NewAPIClient(configuration)
     resp, r, err := api_client.LocationApi.GetSubscriberLocation(context.Background()).SubscriberId(subscriberId).XTestmode(xTestmode).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `LocationApi.GetSubscriberLocation``: %v\n", err)

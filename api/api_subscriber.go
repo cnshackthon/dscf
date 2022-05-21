@@ -17,6 +17,7 @@ import (
 	_ioutil "io/ioutil"
 	_nethttp "net/http"
 	_neturl "net/url"
+	clientmodel "github.com/cnshackthon/dscf/model"
 )
 
 // Linger please
@@ -27,49 +28,16 @@ var (
 // SubscriberApiService SubscriberApi service
 type SubscriberApiService service
 
-type ApiCreateTestUserRequest struct {
-	ctx _context.Context
-	ApiService *SubscriberApiService
-	subscriberDetails *SubscriberDetails
-	xTestmode *string
-}
 
-// Add a new test user
-func (r ApiCreateTestUserRequest) SubscriberDetails(subscriberDetails SubscriberDetails) ApiCreateTestUserRequest {
-	r.subscriberDetails = &subscriberDetails
-	return r
-}
-// Enables test mode when set to \&quot;true\&quot;.  Assumes \&quot;false\&quot; if not present.
-func (r ApiCreateTestUserRequest) XTestmode(xTestmode string) ApiCreateTestUserRequest {
-	r.xTestmode = &xTestmode
-	return r
-}
-
-func (r ApiCreateTestUserRequest) Execute() (SubscriberDetails, *_nethttp.Response, error) {
-	return r.ApiService.CreateTestUserExecute(r)
-}
-
-/*
-CreateTestUser Create a new test user
-
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiCreateTestUserRequest
-*/
-func (a *SubscriberApiService) CreateTestUser(ctx _context.Context) ApiCreateTestUserRequest {
-	return ApiCreateTestUserRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
 
 // Execute executes the request
 //  @return SubscriberDetails
-func (a *SubscriberApiService) CreateTestUserExecute(r ApiCreateTestUserRequest) (SubscriberDetails, *_nethttp.Response, error) {
+func (a *SubscriberApiService) CreateTestUserExecute(r ApiCreateTestUserRequest) (clientmodel.SubscriberDetails, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  SubscriberDetails
+		localVarReturnValue  clientmodel.SubscriberDetails
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SubscriberApiService.CreateTestUser")
@@ -144,7 +112,7 @@ func (a *SubscriberApiService) CreateTestUserExecute(r ApiCreateTestUserRequest)
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v ApiError
+			var v clientmodel.ApiError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -166,40 +134,7 @@ func (a *SubscriberApiService) CreateTestUserExecute(r ApiCreateTestUserRequest)
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiDeleteTestuserRequest struct {
-	ctx _context.Context
-	ApiService *SubscriberApiService
-	subscriberId *SubscriberId
-	xTestmode *string
-}
 
-// External ID of the subscriber
-func (r ApiDeleteTestuserRequest) SubscriberId(subscriberId SubscriberId) ApiDeleteTestuserRequest {
-	r.subscriberId = &subscriberId
-	return r
-}
-// Enables test mode when set to \&quot;true\&quot;.  Assumes \&quot;false\&quot; if not present.
-func (r ApiDeleteTestuserRequest) XTestmode(xTestmode string) ApiDeleteTestuserRequest {
-	r.xTestmode = &xTestmode
-	return r
-}
-
-func (r ApiDeleteTestuserRequest) Execute() (*_nethttp.Response, error) {
-	return r.ApiService.DeleteTestuserExecute(r)
-}
-
-/*
-DeleteTestuser Delete an existing test user
-
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiDeleteTestuserRequest
-*/
-func (a *SubscriberApiService) DeleteTestuser(ctx _context.Context) ApiDeleteTestuserRequest {
-	return ApiDeleteTestuserRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
 
 // Execute executes the request
 func (a *SubscriberApiService) DeleteTestuserExecute(r ApiDeleteTestuserRequest) (*_nethttp.Response, error) {
@@ -281,7 +216,7 @@ func (a *SubscriberApiService) DeleteTestuserExecute(r ApiDeleteTestuserRequest)
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v ApiError
+			var v clientmodel.ApiError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -294,51 +229,17 @@ func (a *SubscriberApiService) DeleteTestuserExecute(r ApiDeleteTestuserRequest)
 	return localVarHTTPResponse, nil
 }
 
-type ApiGetCustomBandwidthRequest struct {
-	ctx _context.Context
-	ApiService *SubscriberApiService
-	subscriberId *SubscriberId
-	xTestmode *string
-}
 
-// External ID of the subscriber
-func (r ApiGetCustomBandwidthRequest) SubscriberId(subscriberId SubscriberId) ApiGetCustomBandwidthRequest {
-	r.subscriberId = &subscriberId
-	return r
-}
-// Enables test mode when set to \&quot;true\&quot;.  Assumes \&quot;false\&quot; if not present.
-func (r ApiGetCustomBandwidthRequest) XTestmode(xTestmode string) ApiGetCustomBandwidthRequest {
-	r.xTestmode = &xTestmode
-	return r
-}
 
-func (r ApiGetCustomBandwidthRequest) Execute() (CustomLimits, *_nethttp.Response, error) {
-	return r.ApiService.GetCustomBandwidthExecute(r)
-}
-
-/*
-GetCustomBandwidth Get upload/download limit
-
-Get the current upload/download bandwidth limits for the subscriber identified by the given ID
-
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetCustomBandwidthRequest
-*/
-func (a *SubscriberApiService) GetCustomBandwidth(ctx _context.Context) ApiGetCustomBandwidthRequest {
-	return ApiGetCustomBandwidthRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
 
 // Execute executes the request
 //  @return CustomLimits
-func (a *SubscriberApiService) GetCustomBandwidthExecute(r ApiGetCustomBandwidthRequest) (CustomLimits, *_nethttp.Response, error) {
+func (a *SubscriberApiService) GetCustomBandwidthExecute(r ApiGetCustomBandwidthRequest) (clientmodel.CustomLimits, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  CustomLimits
+		localVarReturnValue  clientmodel.CustomLimits
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SubscriberApiService.GetCustomBandwidth")
@@ -413,7 +314,7 @@ func (a *SubscriberApiService) GetCustomBandwidthExecute(r ApiGetCustomBandwidth
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v ApiError
+			var v clientmodel.ApiError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -438,12 +339,12 @@ func (a *SubscriberApiService) GetCustomBandwidthExecute(r ApiGetCustomBandwidth
 type ApiGetSubscriberRequest struct {
 	ctx _context.Context
 	ApiService *SubscriberApiService
-	subscriberId *SubscriberId
+	subscriberId *clientmodel.SubscriberId
 	xTestmode *string
 }
 
 // External ID of the subscriber
-func (r ApiGetSubscriberRequest) SubscriberId(subscriberId SubscriberId) ApiGetSubscriberRequest {
+func (r ApiGetSubscriberRequest) SubscriberId(subscriberId clientmodel.SubscriberId) ApiGetSubscriberRequest {
 	r.subscriberId = &subscriberId
 	return r
 }
@@ -453,7 +354,7 @@ func (r ApiGetSubscriberRequest) XTestmode(xTestmode string) ApiGetSubscriberReq
 	return r
 }
 
-func (r ApiGetSubscriberRequest) Execute() (SubscriberDetails, *_nethttp.Response, error) {
+func (r ApiGetSubscriberRequest) Execute() (clientmodel.SubscriberDetails, *_nethttp.Response, error) {
 	return r.ApiService.GetSubscriberExecute(r)
 }
 
@@ -472,12 +373,12 @@ func (a *SubscriberApiService) GetSubscriber(ctx _context.Context) ApiGetSubscri
 
 // Execute executes the request
 //  @return SubscriberDetails
-func (a *SubscriberApiService) GetSubscriberExecute(r ApiGetSubscriberRequest) (SubscriberDetails, *_nethttp.Response, error) {
+func (a *SubscriberApiService) GetSubscriberExecute(r ApiGetSubscriberRequest) (clientmodel.SubscriberDetails, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  SubscriberDetails
+		localVarReturnValue  clientmodel.SubscriberDetails
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SubscriberApiService.GetSubscriber")
@@ -552,7 +453,7 @@ func (a *SubscriberApiService) GetSubscriberExecute(r ApiGetSubscriberRequest) (
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v ApiError
+			var v clientmodel.ApiError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -574,51 +475,17 @@ func (a *SubscriberApiService) GetSubscriberExecute(r ApiGetSubscriberRequest) (
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiGetSubscriberBandwidthRequest struct {
-	ctx _context.Context
-	ApiService *SubscriberApiService
-	subscriberId *SubscriberId
-	xTestmode *string
-}
 
-// External ID of the subscriber
-func (r ApiGetSubscriberBandwidthRequest) SubscriberId(subscriberId SubscriberId) ApiGetSubscriberBandwidthRequest {
-	r.subscriberId = &subscriberId
-	return r
-}
-// Enables test mode when set to \&quot;true\&quot;.  Assumes \&quot;false\&quot; if not present.
-func (r ApiGetSubscriberBandwidthRequest) XTestmode(xTestmode string) ApiGetSubscriberBandwidthRequest {
-	r.xTestmode = &xTestmode
-	return r
-}
 
-func (r ApiGetSubscriberBandwidthRequest) Execute() (BandwidthResponse, *_nethttp.Response, error) {
-	return r.ApiService.GetSubscriberBandwidthExecute(r)
-}
-
-/*
-GetSubscriberBandwidth Get the current subscriber bandwidth
-
-Get the bandwidth identifier for the subscriber identified by the given IMSI
-
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetSubscriberBandwidthRequest
-*/
-func (a *SubscriberApiService) GetSubscriberBandwidth(ctx _context.Context) ApiGetSubscriberBandwidthRequest {
-	return ApiGetSubscriberBandwidthRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
 
 // Execute executes the request
 //  @return BandwidthResponse
-func (a *SubscriberApiService) GetSubscriberBandwidthExecute(r ApiGetSubscriberBandwidthRequest) (BandwidthResponse, *_nethttp.Response, error) {
+func (a *SubscriberApiService) GetSubscriberBandwidthExecute(r ApiGetSubscriberBandwidthRequest) (clientmodel.BandwidthResponse, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  BandwidthResponse
+		localVarReturnValue  clientmodel.BandwidthResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SubscriberApiService.GetSubscriberBandwidth")
@@ -693,7 +560,7 @@ func (a *SubscriberApiService) GetSubscriberBandwidthExecute(r ApiGetSubscriberB
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v ApiError
+			var v clientmodel.ApiError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -715,51 +582,16 @@ func (a *SubscriberApiService) GetSubscriberBandwidthExecute(r ApiGetSubscriberB
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiGetSubscriberLocationRequest struct {
-	ctx _context.Context
-	ApiService *SubscriberApiService
-	subscriberId *SubscriberId
-	xTestmode *string
-}
 
-// External ID of the subscriber
-func (r ApiGetSubscriberLocationRequest) SubscriberId(subscriberId SubscriberId) ApiGetSubscriberLocationRequest {
-	r.subscriberId = &subscriberId
-	return r
-}
-// Enables test mode when set to \&quot;true\&quot;.  Assumes \&quot;false\&quot; if not present.
-func (r ApiGetSubscriberLocationRequest) XTestmode(xTestmode string) ApiGetSubscriberLocationRequest {
-	r.xTestmode = &xTestmode
-	return r
-}
-
-func (r ApiGetSubscriberLocationRequest) Execute() (LocationResponse, *_nethttp.Response, error) {
-	return r.ApiService.GetSubscriberLocationExecute(r)
-}
-
-/*
-GetSubscriberLocation Get last reported location
-
-Get the last reported location of the subscriber identified by the given ID
-
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetSubscriberLocationRequest
-*/
-func (a *SubscriberApiService) GetSubscriberLocation(ctx _context.Context) ApiGetSubscriberLocationRequest {
-	return ApiGetSubscriberLocationRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
 
 // Execute executes the request
 //  @return LocationResponse
-func (a *SubscriberApiService) GetSubscriberLocationExecute(r ApiGetSubscriberLocationRequest) (LocationResponse, *_nethttp.Response, error) {
+func (a *SubscriberApiService) GetSubscriberLocationExecute(r ApiGetSubscriberLocationRequest) (clientmodel.LocationResponse, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  LocationResponse
+		localVarReturnValue  clientmodel.LocationResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SubscriberApiService.GetSubscriberLocation")
@@ -834,7 +666,7 @@ func (a *SubscriberApiService) GetSubscriberLocationExecute(r ApiGetSubscriberLo
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v ApiError
+			var v clientmodel.ApiError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -856,51 +688,16 @@ func (a *SubscriberApiService) GetSubscriberLocationExecute(r ApiGetSubscriberLo
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiUpdateCustomBandwidthRequest struct {
-	ctx _context.Context
-	ApiService *SubscriberApiService
-	customLimits *CustomLimits
-	xTestmode *string
-}
 
-// New upload/download limits for the subscriber
-func (r ApiUpdateCustomBandwidthRequest) CustomLimits(customLimits CustomLimits) ApiUpdateCustomBandwidthRequest {
-	r.customLimits = &customLimits
-	return r
-}
-// Enables test mode when set to \&quot;true\&quot;.  Assumes \&quot;false\&quot; if not present.
-func (r ApiUpdateCustomBandwidthRequest) XTestmode(xTestmode string) ApiUpdateCustomBandwidthRequest {
-	r.xTestmode = &xTestmode
-	return r
-}
-
-func (r ApiUpdateCustomBandwidthRequest) Execute() (CustomLimits, *_nethttp.Response, error) {
-	return r.ApiService.UpdateCustomBandwidthExecute(r)
-}
-
-/*
-UpdateCustomBandwidth Set upload limit
-
-Set the upload/download bandwidth limits for the subscriber identified by the given ID
-
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiUpdateCustomBandwidthRequest
-*/
-func (a *SubscriberApiService) UpdateCustomBandwidth(ctx _context.Context) ApiUpdateCustomBandwidthRequest {
-	return ApiUpdateCustomBandwidthRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
 
 // Execute executes the request
 //  @return CustomLimits
-func (a *SubscriberApiService) UpdateCustomBandwidthExecute(r ApiUpdateCustomBandwidthRequest) (CustomLimits, *_nethttp.Response, error) {
+func (a *SubscriberApiService) UpdateCustomBandwidthExecute(r ApiUpdateCustomBandwidthRequest) (clientmodel.CustomLimits, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  CustomLimits
+		localVarReturnValue  clientmodel.CustomLimits
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SubscriberApiService.UpdateCustomBandwidth")
@@ -975,7 +772,7 @@ func (a *SubscriberApiService) UpdateCustomBandwidthExecute(r ApiUpdateCustomBan
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v ApiError
+			var v clientmodel.ApiError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -997,51 +794,17 @@ func (a *SubscriberApiService) UpdateCustomBandwidthExecute(r ApiUpdateCustomBan
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiUpdateSubscriberBandwidthRequest struct {
-	ctx _context.Context
-	ApiService *SubscriberApiService
-	bandwidthUpdate *BandwidthUpdate
-	xTestmode *string
-}
 
-// New bandwidth for subscriber
-func (r ApiUpdateSubscriberBandwidthRequest) BandwidthUpdate(bandwidthUpdate BandwidthUpdate) ApiUpdateSubscriberBandwidthRequest {
-	r.bandwidthUpdate = &bandwidthUpdate
-	return r
-}
-// Enables test mode when set to \&quot;true\&quot;.  Assumes \&quot;false\&quot; if not present.
-func (r ApiUpdateSubscriberBandwidthRequest) XTestmode(xTestmode string) ApiUpdateSubscriberBandwidthRequest {
-	r.xTestmode = &xTestmode
-	return r
-}
 
-func (r ApiUpdateSubscriberBandwidthRequest) Execute() (BandwidthResponse, *_nethttp.Response, error) {
-	return r.ApiService.UpdateSubscriberBandwidthExecute(r)
-}
-
-/*
-UpdateSubscriberBandwidth Update the bandwidth of the subscriber
-
-Update the bandwidth identifier for the subscriber identified by the given IMSI
-
- @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiUpdateSubscriberBandwidthRequest
-*/
-func (a *SubscriberApiService) UpdateSubscriberBandwidth(ctx _context.Context) ApiUpdateSubscriberBandwidthRequest {
-	return ApiUpdateSubscriberBandwidthRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
 
 // Execute executes the request
 //  @return BandwidthResponse
-func (a *SubscriberApiService) UpdateSubscriberBandwidthExecute(r ApiUpdateSubscriberBandwidthRequest) (BandwidthResponse, *_nethttp.Response, error) {
+func (a *SubscriberApiService) UpdateSubscriberBandwidthExecute(r ApiUpdateSubscriberBandwidthRequest) (clientmodel.BandwidthResponse, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  BandwidthResponse
+		localVarReturnValue  clientmodel.BandwidthResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SubscriberApiService.UpdateSubscriberBandwidth")
@@ -1117,7 +880,7 @@ func (a *SubscriberApiService) UpdateSubscriberBandwidthExecute(r ApiUpdateSubsc
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v ApiError
+			var v clientmodel.ApiError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1126,7 +889,7 @@ func (a *SubscriberApiService) UpdateSubscriberBandwidthExecute(r ApiUpdateSubsc
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-			var v ApiError
+			var v clientmodel.ApiError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

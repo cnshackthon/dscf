@@ -33,5 +33,5 @@ func main() {
 
 	router := datarepository.NewRouter(LocationApiController, RecordCRUDApiController, SubscriberApiController, UeIdCRUDApiController)
 
-	log.Fatal(http.ListenAndServe(":80", router))
+	log.Fatal(http.ListenAndServe("127.0.0.1:8081", router))
 }

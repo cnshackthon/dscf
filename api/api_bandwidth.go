@@ -17,6 +17,7 @@ import (
 	_ioutil "io/ioutil"
 	_nethttp "net/http"
 	_neturl "net/url"
+	clientmodel "github.com/cnshackthon/dscf/model"
 )
 
 // Linger please
@@ -30,12 +31,12 @@ type BandwidthApiService service
 type ApiGetCustomBandwidthRequest struct {
 	ctx _context.Context
 	ApiService *BandwidthApiService
-	subscriberId *SubscriberId
+	subscriberId *clientmodel.SubscriberId
 	xTestmode *string
 }
 
 // External ID of the subscriber
-func (r ApiGetCustomBandwidthRequest) SubscriberId(subscriberId SubscriberId) ApiGetCustomBandwidthRequest {
+func (r ApiGetCustomBandwidthRequest) SubscriberId(subscriberId clientmodel.SubscriberId) ApiGetCustomBandwidthRequest {
 	r.subscriberId = &subscriberId
 	return r
 }
@@ -45,7 +46,7 @@ func (r ApiGetCustomBandwidthRequest) XTestmode(xTestmode string) ApiGetCustomBa
 	return r
 }
 
-func (r ApiGetCustomBandwidthRequest) Execute() (CustomLimits, *_nethttp.Response, error) {
+func (r ApiGetCustomBandwidthRequest) Execute() (clientmodel.CustomLimits, *_nethttp.Response, error) {
 	return r.ApiService.GetCustomBandwidthExecute(r)
 }
 
@@ -66,12 +67,12 @@ func (a *BandwidthApiService) GetCustomBandwidth(ctx _context.Context) ApiGetCus
 
 // Execute executes the request
 //  @return CustomLimits
-func (a *BandwidthApiService) GetCustomBandwidthExecute(r ApiGetCustomBandwidthRequest) (CustomLimits, *_nethttp.Response, error) {
+func (a *BandwidthApiService) GetCustomBandwidthExecute(r ApiGetCustomBandwidthRequest) (clientmodel.CustomLimits, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  CustomLimits
+		localVarReturnValue  clientmodel.CustomLimits
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BandwidthApiService.GetCustomBandwidth")
@@ -146,7 +147,7 @@ func (a *BandwidthApiService) GetCustomBandwidthExecute(r ApiGetCustomBandwidthR
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v ApiError
+			var v clientmodel.ApiError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -171,12 +172,12 @@ func (a *BandwidthApiService) GetCustomBandwidthExecute(r ApiGetCustomBandwidthR
 type ApiGetSubscriberBandwidthRequest struct {
 	ctx _context.Context
 	ApiService *BandwidthApiService
-	subscriberId *SubscriberId
+	subscriberId *clientmodel.SubscriberId
 	xTestmode *string
 }
 
 // External ID of the subscriber
-func (r ApiGetSubscriberBandwidthRequest) SubscriberId(subscriberId SubscriberId) ApiGetSubscriberBandwidthRequest {
+func (r ApiGetSubscriberBandwidthRequest) SubscriberId(subscriberId clientmodel.SubscriberId) ApiGetSubscriberBandwidthRequest {
 	r.subscriberId = &subscriberId
 	return r
 }
@@ -186,7 +187,7 @@ func (r ApiGetSubscriberBandwidthRequest) XTestmode(xTestmode string) ApiGetSubs
 	return r
 }
 
-func (r ApiGetSubscriberBandwidthRequest) Execute() (BandwidthResponse, *_nethttp.Response, error) {
+func (r ApiGetSubscriberBandwidthRequest) Execute() (clientmodel.BandwidthResponse, *_nethttp.Response, error) {
 	return r.ApiService.GetSubscriberBandwidthExecute(r)
 }
 
@@ -207,12 +208,12 @@ func (a *BandwidthApiService) GetSubscriberBandwidth(ctx _context.Context) ApiGe
 
 // Execute executes the request
 //  @return BandwidthResponse
-func (a *BandwidthApiService) GetSubscriberBandwidthExecute(r ApiGetSubscriberBandwidthRequest) (BandwidthResponse, *_nethttp.Response, error) {
+func (a *BandwidthApiService) GetSubscriberBandwidthExecute(r ApiGetSubscriberBandwidthRequest) (clientmodel.BandwidthResponse, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  BandwidthResponse
+		localVarReturnValue  clientmodel.BandwidthResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BandwidthApiService.GetSubscriberBandwidth")
@@ -287,7 +288,7 @@ func (a *BandwidthApiService) GetSubscriberBandwidthExecute(r ApiGetSubscriberBa
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v ApiError
+			var v clientmodel.ApiError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -312,12 +313,12 @@ func (a *BandwidthApiService) GetSubscriberBandwidthExecute(r ApiGetSubscriberBa
 type ApiUpdateCustomBandwidthRequest struct {
 	ctx _context.Context
 	ApiService *BandwidthApiService
-	customLimits *CustomLimits
+	customLimits *clientmodel.CustomLimits
 	xTestmode *string
 }
 
 // New upload/download limits for the subscriber
-func (r ApiUpdateCustomBandwidthRequest) CustomLimits(customLimits CustomLimits) ApiUpdateCustomBandwidthRequest {
+func (r ApiUpdateCustomBandwidthRequest) CustomLimits(customLimits clientmodel.CustomLimits) ApiUpdateCustomBandwidthRequest {
 	r.customLimits = &customLimits
 	return r
 }
@@ -327,7 +328,7 @@ func (r ApiUpdateCustomBandwidthRequest) XTestmode(xTestmode string) ApiUpdateCu
 	return r
 }
 
-func (r ApiUpdateCustomBandwidthRequest) Execute() (CustomLimits, *_nethttp.Response, error) {
+func (r ApiUpdateCustomBandwidthRequest) Execute() (clientmodel.CustomLimits, *_nethttp.Response, error) {
 	return r.ApiService.UpdateCustomBandwidthExecute(r)
 }
 
@@ -348,12 +349,12 @@ func (a *BandwidthApiService) UpdateCustomBandwidth(ctx _context.Context) ApiUpd
 
 // Execute executes the request
 //  @return CustomLimits
-func (a *BandwidthApiService) UpdateCustomBandwidthExecute(r ApiUpdateCustomBandwidthRequest) (CustomLimits, *_nethttp.Response, error) {
+func (a *BandwidthApiService) UpdateCustomBandwidthExecute(r ApiUpdateCustomBandwidthRequest) (clientmodel.CustomLimits, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  CustomLimits
+		localVarReturnValue  clientmodel.CustomLimits
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BandwidthApiService.UpdateCustomBandwidth")
@@ -428,7 +429,7 @@ func (a *BandwidthApiService) UpdateCustomBandwidthExecute(r ApiUpdateCustomBand
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v ApiError
+			var v clientmodel.ApiError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -453,12 +454,12 @@ func (a *BandwidthApiService) UpdateCustomBandwidthExecute(r ApiUpdateCustomBand
 type ApiUpdateSubscriberBandwidthRequest struct {
 	ctx _context.Context
 	ApiService *BandwidthApiService
-	bandwidthUpdate *BandwidthUpdate
+	bandwidthUpdate *clientmodel.BandwidthUpdate
 	xTestmode *string
 }
 
 // New bandwidth for subscriber
-func (r ApiUpdateSubscriberBandwidthRequest) BandwidthUpdate(bandwidthUpdate BandwidthUpdate) ApiUpdateSubscriberBandwidthRequest {
+func (r ApiUpdateSubscriberBandwidthRequest) BandwidthUpdate(bandwidthUpdate clientmodel.BandwidthUpdate) ApiUpdateSubscriberBandwidthRequest {
 	r.bandwidthUpdate = &bandwidthUpdate
 	return r
 }
@@ -468,7 +469,7 @@ func (r ApiUpdateSubscriberBandwidthRequest) XTestmode(xTestmode string) ApiUpda
 	return r
 }
 
-func (r ApiUpdateSubscriberBandwidthRequest) Execute() (BandwidthResponse, *_nethttp.Response, error) {
+func (r ApiUpdateSubscriberBandwidthRequest) Execute() (clientmodel.BandwidthResponse, *_nethttp.Response, error) {
 	return r.ApiService.UpdateSubscriberBandwidthExecute(r)
 }
 
@@ -489,12 +490,12 @@ func (a *BandwidthApiService) UpdateSubscriberBandwidth(ctx _context.Context) Ap
 
 // Execute executes the request
 //  @return BandwidthResponse
-func (a *BandwidthApiService) UpdateSubscriberBandwidthExecute(r ApiUpdateSubscriberBandwidthRequest) (BandwidthResponse, *_nethttp.Response, error) {
+func (a *BandwidthApiService) UpdateSubscriberBandwidthExecute(r ApiUpdateSubscriberBandwidthRequest) (clientmodel.BandwidthResponse, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  BandwidthResponse
+		localVarReturnValue  clientmodel.BandwidthResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BandwidthApiService.UpdateSubscriberBandwidth")
@@ -570,7 +571,7 @@ func (a *BandwidthApiService) UpdateSubscriberBandwidthExecute(r ApiUpdateSubscr
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v ApiError
+			var v clientmodel.ApiError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -579,7 +580,7 @@ func (a *BandwidthApiService) UpdateSubscriberBandwidthExecute(r ApiUpdateSubscr
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-			var v ApiError
+			var v clientmodel.ApiError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

@@ -106,7 +106,7 @@ func NewConfiguration() *Configuration {
 		Debug:            false,
 		Servers:          ServerConfigurations{
 			{
-				URL: "https://apigee-api-test.nokia-solution.com/nac/v2",
+				URL: "http://127.0.0.1:8080/nac/v2",
 				Description: "Development/Test server for Network as Code",
 			},
 		},

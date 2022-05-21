@@ -17,6 +17,7 @@ import (
 	_ioutil "io/ioutil"
 	_nethttp "net/http"
 	_neturl "net/url"
+	clientmodel "github.com/cnshackthon/dscf/model"
 )
 
 // Linger please
@@ -30,12 +31,12 @@ type LocationApiService service
 type ApiGetSubscriberLocationRequest struct {
 	ctx _context.Context
 	ApiService *LocationApiService
-	subscriberId *SubscriberId
+	subscriberId *clientmodel.SubscriberId
 	xTestmode *string
 }
 
 // External ID of the subscriber
-func (r ApiGetSubscriberLocationRequest) SubscriberId(subscriberId SubscriberId) ApiGetSubscriberLocationRequest {
+func (r ApiGetSubscriberLocationRequest) SubscriberId(subscriberId clientmodel.SubscriberId) ApiGetSubscriberLocationRequest {
 	r.subscriberId = &subscriberId
 	return r
 }
@@ -45,7 +46,7 @@ func (r ApiGetSubscriberLocationRequest) XTestmode(xTestmode string) ApiGetSubsc
 	return r
 }
 
-func (r ApiGetSubscriberLocationRequest) Execute() (LocationResponse, *_nethttp.Response, error) {
+func (r ApiGetSubscriberLocationRequest) Execute() (clientmodel.LocationResponse, *_nethttp.Response, error) {
 	return r.ApiService.GetSubscriberLocationExecute(r)
 }
 
@@ -66,12 +67,12 @@ func (a *LocationApiService) GetSubscriberLocation(ctx _context.Context) ApiGetS
 
 // Execute executes the request
 //  @return LocationResponse
-func (a *LocationApiService) GetSubscriberLocationExecute(r ApiGetSubscriberLocationRequest) (LocationResponse, *_nethttp.Response, error) {
+func (a *LocationApiService) GetSubscriberLocationExecute(r ApiGetSubscriberLocationRequest) (clientmodel.LocationResponse, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  LocationResponse
+		localVarReturnValue  clientmodel.LocationResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LocationApiService.GetSubscriberLocation")
@@ -146,7 +147,7 @@ func (a *LocationApiService) GetSubscriberLocationExecute(r ApiGetSubscriberLoca
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v ApiError
+			var v clientmodel.ApiError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
