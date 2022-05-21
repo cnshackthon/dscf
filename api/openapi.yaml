@@ -1,0 +1,167 @@
+openapi: 3.0.0
+info:
+  description: |
+    Ndscf Data Repository Service.
+    © 2021, 3GPP Organizational Partners (ARIB, ATIS, CCSA, ETSI, TSDSI, TTA, TTC).
+    All rights reserved.
+  title: Ndscf_DataRepository
+  version: 1.0.0
+externalDocs:
+  description: DSCF Services
+  url: /
+servers:
+- url: '{apiRoot}/ndscf/v1'
+  variables:
+    apiRoot:
+      default: https://example.com
+      description: apiRoot as defined in clause 4.4 of 3GPP TS 29.501
+security:
+- {}
+- oAuth2ClientCredentials:
+  - ndscf
+paths:
+  /correlation/{ueId}:
+    delete:
+      operationId: DeleteCorrelation
+      parameters:
+      - description: Identifier(name) of the ue
+        explode: false
+        in: path
+        name: ueId
+        required: true
+        schema:
+          $ref: '#/components/schemas/Supi'
+        style: simple
+      - description: subIds
+        explode: false
+        in: query
+        name: subIds
+        required: true
+        schema:
+          items:
+            type: string
+          minItems: 1
+          type: array
+        style: form
+      responses:
+        "200":
+          description: Successful case.
+        "204":
+          description: Successful case.
+        default:
+          description: Unexpected error
+      summary: Delete a Record with an user provided RecordId
+      tags:
+      - Record CRUD
+    description: Add or delete correlation
+    put:
+      description: Create or Modify correlation between ueId and subIDs
+      operationId: CreateOrModifyCorrelation
+      parameters:
+      - description: Identifier(name) of the ue
+        explode: false
+        in: path
+        name: ueId
+        required: true
+        schema:
+          $ref: '#/components/schemas/Supi'
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubIds'
+        required: true
+      responses:
+        "204":
+          description: Successful acknowledgement
+        default:
+          description: Unexpected error
+      summary: Create/Modify correlation between ueId and subIDs
+      tags:
+      - ueId CRUD
+    summary: correlation between ueId and subIDs
+  /location/{subId}:
+    description: Retrieve the last reported location of the subId
+    post:
+      description: Get the last reported location of the subId
+      operationId: getSubIdLocation
+      parameters:
+      - description: sub of the ue
+        explode: false
+        in: path
+        name: subId
+        required: true
+        schema:
+          example: ID-123456789
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationResponse'
+          description: Subscriber location
+        default:
+          description: Unexpected error
+      summary: Get last reported location
+      tags:
+      - subscriber
+      - location
+    summary: Last reported location
+components:
+  schemas:
+    SubIds:
+      items:
+        type: string
+      minItems: 1
+      type: array
+      uniqueItems: true
+    LocationResponse:
+      example:
+        locationInfo:
+          ageOfLocationInfo: "150"
+          trackingAreaId: 1234567890AB
+          plmnId: "001001"
+          lat: "0.0"
+          long: "0.0"
+          elev: "123"
+        eventTime: 2000-01-23T04:56:07.000+00:00
+        id: id
+      properties:
+        eventTime:
+          format: date-time
+          type: string
+        id:
+          type: string
+        locationInfo:
+          $ref: '#/components/schemas/LocationDetails'
+      type: object
+    LocationDetails:
+      example:
+        ageOfLocationInfo: "150"
+        trackingAreaId: 1234567890AB
+        plmnId: "001001"
+        lat: "0.0"
+        long: "0.0"
+        elev: "123"
+      properties:
+        ageOfLocationInfo:
+          pattern: /^[0-9]+$/
+          type: string
+        trackingAreaId:
+          type: string
+        plmnId:
+          pattern: /^[0-9]+$/
+          type: string
+        lat:
+          type: string
+        long:
+          type: string
+        elev:
+          type: string
+      type: object
+    Supi:
+      pattern: ^(imsi-[0-9]{5,15}|nai-.+|gci-.+|gli-.+|.+)$
+      type: string
