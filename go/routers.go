@@ -21,6 +21,8 @@ import (
 	"strings"
 )
 
+var globCorrMap map[string]string
+
 // A Route defines the parameters for an api endpoint
 type Route struct {
 	Name		string
@@ -55,7 +57,7 @@ func NewRouter(routers ...Router) *mux.Router {
 				Handler(handler)
 		}
 	}
-
+	globCorrMap = make(map[string]string)
 	return router
 }
 
